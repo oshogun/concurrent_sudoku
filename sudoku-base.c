@@ -4,7 +4,8 @@
 #define SIZE 9
 
 /* Funcao que le um grid do arquivo "filename" e o armazena em uma matriz */
-int load_grid(int grid[][SIZE], char *filename) {
+int load_grid(int grid[][SIZE], char *filename) 
+{
 	FILE *input_file = fopen(filename, "r");
 
 	if (input_file != NULL) {
@@ -18,7 +19,31 @@ int load_grid(int grid[][SIZE], char *filename) {
 	return 0;
 }
 
-int main(int argc, char *argv[]) {
+void check_rows(int grid[][SIZE]) 
+{
+	int flag;
+	for (int i = 0; i < SIZE; i++) {
+		flag = 0x0000; // Máscara binária para controle dos digitos da linha
+					   // Se todos os digitos estiverem presentes, flag = 0x01FF
+		for (int j = 0; j < SIZE; j++) {
+			flag |= 1 << (grid[i][j] - 1);
+		}
+		if (flag != 0x01FF) {
+			printf("Erro na linha %d\n", i + 1);
+		}
+	}
+}
+
+void check_collumns(int grid[][SIZE])
+{
+	int flag;
+	for (int i = 0; i < SIZE; i++) {
+		flag = 0x0000;
+	}
+}
+
+int main(int argc, char *argv[]) 
+{
 
 	if(argc != 2) {
 		printf("Erro: informe o arquivo de entrada!\nUso: %s <arquivo de entrada>\n\n", argv[0]);
@@ -34,6 +59,7 @@ int main(int argc, char *argv[]) {
 				printf("%d ", grid[i][j]);
 			printf("\n");
 		}
+		check_rows(grid);
 		printf("\n");
 	}
 
