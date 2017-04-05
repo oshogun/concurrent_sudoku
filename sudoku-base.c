@@ -52,16 +52,17 @@ void check_collumns(int grid[][SIZE])
 void check_quadrants(int grid[][SIZE])
 {
 	int flag, si, sj, i, j;
-	for (si = 0; si < (int)sqrt(SIZE); si++) {
-		for (sj = 0; sj < (int)sqrt(SIZE); sj++) {
+	int quadrant_size = (int) sqrt(SIZE);
+	for (si = 0; si < quadrant_size; si++) {
+		for (sj = 0; sj < quadrant_size; sj++) {
 			flag = 0x0000;
-			for (i = 0; i < (int)sqrt(SIZE); i++) {
+			for (i = 0; i < quadrant_size; i++) {
 				for (j = 0; j < sqrt(SIZE); j++) {
-					flag |= 1 << (grid[si * (int)sqrt(SIZE) + i][sj * (int)sqrt(SIZE) + j] - 1);
+					flag |= 1 << (grid[si * quadrant_size + i][sj * quadrant_size + j] - 1);
 				}
 			}
 			if (flag != 0x01FF) {
-				printf("Erro no quadrante %d, %d\n", si * (int)sqrt(SIZE) + i - 1, sj * (int)sqrt(SIZE) + j - 1);			
+				printf("Erro no quadrante %d, %d\n", si * quadrant_size + i - 1, sj * quadrant_size + j - 1);			
 			}
 		}
 	}
