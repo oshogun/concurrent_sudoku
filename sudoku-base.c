@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 
 /* grid size = 9x9 */
 #define SIZE 9
@@ -37,8 +38,32 @@ void check_rows(int grid[][SIZE])
 void check_collumns(int grid[][SIZE])
 {
 	int flag;
-	for (int i = 0; i < SIZE; i++) {
+	for (int j = 0; j < SIZE; j++) {
 		flag = 0x0000;
+		for (int i = 0; i < SIZE; i++) {
+			flag |= 1 << (grid[i][j] - 1);
+		}
+		if (flag != 0x01FF) {
+			printf("Erro na coluna %d\n",j + 1);
+		}
+	}
+}
+
+void check_quadrants(int grid[][SIZE])
+{
+	int flag;
+	for (int si = 0; si < (int)sqrt(SIZE); si++) {
+		for (int sj = 0; sj < (int)sqrt(SIZE); sj++) {
+			flag = 0x0000;
+			for (int i = 0; i < (int)sqrt(SIZE); i++) {
+				for (int j = 0; j < sqrt(SIZE); j++) {
+					flag |= 1 << (grid[si * (int)sqrt(SIZE) + i][sj * (int)sqrt(SIZE) + j] - 1);
+					if (flag != 0x01FF) {
+						printf("Erro no quadrante %d, %d\n", si * (int)sqrt(SIZE) + i - 1, sj * (int)sqrt(SIZE) + j - 1);			
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -60,6 +85,7 @@ int main(int argc, char *argv[])
 			printf("\n");
 		}
 		check_rows(grid);
+		check_collumns(grid);
 		printf("\n");
 	}
 
